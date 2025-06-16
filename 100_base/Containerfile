@@ -1,0 +1,34 @@
+# syntax=docker/dockerfile:1.3-labs
+
+FROM ubuntu
+
+# ***********************************************
+# install packages for xrdp, and do setting
+# ***********************************************
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        apt-utils sudo curl bash-completion vim 
+
+# ***********************************************
+# bash complete 
+# ***********************************************
+RUN mv /etc/apt/sources.list /etc/apt/sources.list.d/sources.list
+RUN cp -p /etc/apt/apt.conf.d/docker-clean /etc/apt/apt.conf.d/docker-clean.bk
+RUN sed -e "s/^/#/g" /etc/apt/apt.conf.d/docker-clean.bk > /etc/apt/apt.conf.d/docker-clean 
+
+# PodmanのRUNでヒアドキュメントが使えないので、それぞれの行に記載
+#RUN <<_EOC_
+#cat <<_DOC_ >> /root/.bashrc
+#if ! shopt -oq posix; then
+#  if [ -f /etc/bash_completion ]; then
+#    . /etc/bash_completion
+#  fi
+#fi
+#_DOC_
+#_EOC_
+
+RUN echo "if [ -f /etc/bash_completion ] && ! shopt -oq posix; then" >> /root/.bashrc
+RUN echo "    . /etc/bash_completion" >> /root/.bashrc
+RUN echo "fi" >> /root/.bashrc
+
+RUN rm -f /var/cache/apt/archives/*.deb /var/cache/apt/archives/partial/*.deb /var/cache/apt/*.bin
