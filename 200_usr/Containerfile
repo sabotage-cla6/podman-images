@@ -1,0 +1,40 @@
+FROM sabotagecla6/ubuntu
+
+# ***********************************************
+# setting skelton
+# ***********************************************
+RUN mkdir -p /etc/skel/Desktop \
+    /etc/skel/Downloads \
+    /etc/skel/Templates \
+    /etc/skel/Public \
+    /etc/skel/Documents \
+    /etc/skel/Music \
+    /etc/skel/Pictures \
+    /etc/skel/Videos
+
+RUN cp /root/.bashrc /etc/skel/.bashrc && cp /root/.profile /etc/skel/.profile
+RUN userdel ubuntu
+RUN rm -rf /home/ubuntu/
+
+# ***********************************************
+# default user setting
+# ***********************************************
+# you not spcify user info, below paramaeters is used for user setting.
+ENV DEFAULT_USER_ID=1000
+ENV DEFAULT_GROUP_ID=1000
+ENV DEFAULT_USER=ubuntu
+ENV DEFAULT_PASSWD=ubuntu
+ENV DEFAULT_ROOT_PASSWD=ubuntu
+
+# when you create container based on ubuntu-usr, you spcify below parameters
+# ENV USER_ID=1000
+# ENV GROUP_ID=1000
+# ENV PASSWD=1000
+# ENV USER=1000
+# ENV ROOT_PASSWD=1000
+# ENV NO_PASSWD=true
+
+COPY initilize-image.sh /usr/bin/
+COPY create-user.sh /usr/bin/
+RUN chmod a+x /usr/bin/initilize-image.sh
+RUN chmod a+x /usr/bin/create-user.sh
