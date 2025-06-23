@@ -1,0 +1,30 @@
+FROM sabotagecla6/chrome
+
+# ***********************************************
+# install packages
+# ***********************************************
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        gnupg xdg-utils libnspr4 libnss3
+
+# ***********************************************
+# install vscode
+# ***********************************************
+#RUN <<_EOC_
+#echo "code code/add-microsoft-repo boolean true" | sudo debconf-set-selections;
+#sudo apt-get install wget gpg;
+#wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg;
+#sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg;
+#echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+#rm -f packages.microsoft.gpg;
+#
+#sudo apt install apt-transport-https;
+#sudo apt update;
+#sudo apt install code # or code-insiders;
+#_EOC_
+
+ADD https://vscode.download.prss.microsoft.com/dbazure/download/stable/18e3a1ec544e6907be1e944a94c496e302073435/code_1.101.1-1750254731_amd64.deb code_amd64.deb
+RUN dpkg -i code_amd64.deb;
+
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
+CMD ["code", "-w","--disable-gpu","--disable-software-rasterizer","--disable-dev-shm-usage"]]

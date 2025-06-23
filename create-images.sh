@@ -8,3 +8,4 @@ podman build ./300_gui/  -t sabotagecla6/ubuntu-gui-jp -f ./300_gui/Containerfil
 
 # application
 podman build ./500_application/chrome  -t sabotagecla6/chrome
+podman build ./500_application/vscode  -t sabotagecla6/vscode
