@@ -14,6 +14,9 @@ RUN apt-get update && \
 ADD https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb /tmp/google-chrome-stable.deb
 
 RUN dpkg -i /tmp/google-chrome-stable.deb
+RUN echo "google-chrome --disable-gpu --disable-dev-shm-usage --disable-software-rasterizer" >> /usr/local/bin/chrome
+RUN chmod a+x /usr/local/bin/chrome
 
-ENTRYPOINT ["/usr/bin/entrypoint.sh"]
-CMD ["google-chrome","--disable-gpu","--disable-software-rasterizer","--disable-dev-shm-usage"]
+
+# ENTRYPOINT ["/usr/bin/entrypoint.sh"]
+# CMD ["google-chrome","--disable-gpu","--disable-software-rasterizer","--disable-dev-shm-usage"]
