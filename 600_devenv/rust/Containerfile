@@ -1,0 +1,7 @@
+FROM sabotagecla6/vscode
+
+RUN apt-get update -y && sudo apt-get upgrade -y;
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y rustc cargo;
+
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
+CMD ["vscode"]
