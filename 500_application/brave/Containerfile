@@ -1,0 +1,11 @@
+FROM sabotagecla6/ubuntu-gui-jp
+
+# ***********************************************
+# install packages
+# ***********************************************
+RUN curl -fsS https://dl.brave.com/install.sh | sh
+RUN echo "brave-browser --disable-gpu --disable-dev-shm-usage --disable-software-rasterizer" >> /usr/local/bin/brave
+RUN chmod a+x /usr/local/bin/brave
+
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
+CMD ["brave-browser","--disable-gpu","--disable-software-rasterizer","--disable-dev-shm-usage"]
