@@ -23,8 +23,12 @@ RUN apt-get update && \
 #sudo apt install code # or code-insiders;
 #_EOC_
 
-ADD https://vscode.download.prss.microsoft.com/dbazure/download/stable/18e3a1ec544e6907be1e944a94c496e302073435/code_1.101.1-1750254731_amd64.deb code_amd64.deb
+ADD https://vscode.download.prss.microsoft.com/dbazure/download/stable/ac4cbdf48759c7d8c3eb91ffe6bb04316e263c57/code_1.106.0-1762878362_amd64.deb code_amd64.deb
 RUN dpkg -i code_amd64.deb;
 
-ENTRYPOINT ["/usr/bin/entrypoint.sh"]
-CMD ["code", "-w","--disable-gpu","--disable-software-rasterizer","--disable-dev-shm-usage"]]
+RUN echo "code --disable-gpu --disable-dev-shm-usage" >> /usr/local/bin/vscode
+RUN chmod a+x /usr/local/bin/vscode
+
+
+# ENTRYPOINT ["/usr/bin/entrypoint.sh"]
+# CMD ["vscode"]
