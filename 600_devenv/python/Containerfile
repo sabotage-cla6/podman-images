@@ -1,0 +1,14 @@
+FROM sabotagecla6/vscode
+
+# ***********************************************
+# install packages
+# ***********************************************
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        python3 python3-pip python3-venv
+
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get upgrade -y 
+
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
+CMD ["vscode", "-w"]
