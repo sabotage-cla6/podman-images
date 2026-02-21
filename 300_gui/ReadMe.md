@@ -9,21 +9,23 @@ chromeやvscodeなどのアプリケーションをコンテナ内で実行し�
 音声出力のために、ユーザーをホスト側と一致させる必要があるため、ユーザーIDを指定しています。
 
 ```
-sudo docker run -u $(id -u):$(id -g) --shm-size=4096m -v /run/user/$(id -u)/pulse/native:/tmp/pulse/native  -v ~/.config/pulse/cookie:/tmp/pulse/cookie:ro -e PULSE_COOKIE=/tmp/pulse/cookie -e PULSE_SERVER=unix:/tmp/pulse/native  -v /tmp/.X11-unix/X0:/tmp/.X11-unix/X0 -e DISPLAY [コンテナイメージ名] [実行コマンド]
+podman run -u 1000:1000 \
+    --device /dev/snd -e XDG_RUNTIME_DIR -e PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native \
+    -v ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:Z \
+    -e DISPLAY --net=host \
+    -v $HOME/.Xauthority:/tmp/.Xauthority:Z -v /tmp/.X11-unix/X0:/tmp/.X11-unix/X0:ro
+    [コンテナイメージ名] [実行コマンド]
 ```
 
 下記をaliasしておくと便利です
 
 ```
-alias docker-sound='sudo docker run -u $(id -u):$(id -g) --shm-size=4096m -v /run/user/$(id -u)/pulse/native:/tmp/pulse/native  -v ~/.config/pulse/cookie:/tmp/pulse/cookie:ro -e PULSE_COOKIE=/tmp/pulse/cookie -e PULSE_SERVER=unix:/tmp/pulse/native'
+alias podman-sound='podman run -u 1000:1000 --device /dev/snd -e XDG_RUNTIME_DIR -e PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native -v ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:Z'
 
-alias docker-display='docker-sound -v /tmp/.X11-unix/X0:/tmp/.X11-unix/X0 -e DISPLAY'
+alias podman-display='podman-sound -e DISPLAY --net=host -v $HOME/.Xauthority:/tmp/.Xauthority:Z -v /tmp/.X11-unix/X0:/tmp/.X11-unix/X0:ro'
 ```
 
 ## 現状の課題
 
 - 日本語入力できない
     - ubuntu:20.04をベースにすれば可能だが、22.04では機能しない。
-- firefoxをインストールできない。
-    - firefoxを立ち上げるとsnap インストールするように言われる
-    - chromeを --no-sandbox オプションつけて起動している
