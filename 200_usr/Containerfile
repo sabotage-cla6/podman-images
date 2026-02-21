@@ -34,7 +34,5 @@ ENV DEFAULT_ROOT_PASSWD=ubuntu
 # ENV ROOT_PASSWD=1000
 # ENV NO_PASSWD=true
 
-COPY initilize-image.sh /usr/bin/
 COPY create-user.sh /usr/bin/
-RUN chmod a+x /usr/bin/initilize-image.sh
 RUN chmod a+x /usr/bin/create-user.sh
