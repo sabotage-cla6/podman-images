@@ -7,7 +7,8 @@ FROM docker.io/library/ubuntu
 # ***********************************************
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
-        apt-utils sudo curl bash-completion vim 
+        apt-utils sudo curl bash-completion vim && \
+        apt-get clean
 
 # ***********************************************
 # bash complete 
@@ -30,5 +31,8 @@ RUN sed -e "s/^/#/g" /etc/apt/apt.conf.d/docker-clean.bk > /etc/apt/apt.conf.d/d
 RUN echo "if [ -f /etc/bash_completion ] && ! shopt -oq posix; then" >> /root/.bashrc
 RUN echo "    . /etc/bash_completion" >> /root/.bashrc
 RUN echo "fi" >> /root/.bashrc
+
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
 
 RUN rm -f /var/cache/apt/archives/*.deb /var/cache/apt/archives/partial/*.deb /var/cache/apt/*.bin

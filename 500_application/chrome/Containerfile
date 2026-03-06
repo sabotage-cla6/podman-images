@@ -1,22 +1,18 @@
 FROM sabotagecla6/ubuntu-gui-jp
 
+WORKDIR /install
+
 # ***********************************************
 # install packages
 # ***********************************************
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
-        libnspr4 libnss3 libu2f-udev libvulkan1 xdg-utils fonts-liberation wget
+    DEBIAN_FRONTEND=noninteractive apt-get install --install-recommends -y \
+        libnspr4 libnss3 libu2f-udev libvulkan1 xdg-utils fonts-liberation wget ubuntu-restricted-extras
 
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
-        ubuntu-restricted-extras
+ADD https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb google-chrome-stable.deb
 
-ADD https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb /tmp/google-chrome-stable.deb
+RUN pwd && apt-get update && \
+   DEBIAN_FRONTEND=noninteractive apt-get install --install-recommends -y /install/google-chrome-stable.deb && \
+   apt-get clean
 
-RUN dpkg -i /tmp/google-chrome-stable.deb
-RUN echo "google-chrome --disable-gpu --disable-dev-shm-usage --disable-software-rasterizer" >> /usr/local/bin/chrome
-RUN chmod a+x /usr/local/bin/chrome
-
-
-# ENTRYPOINT ["/usr/bin/entrypoint.sh"]
-# CMD ["google-chrome","--disable-gpu","--disable-software-rasterizer","--disable-dev-shm-usage"]
+RUN rm -rf /install

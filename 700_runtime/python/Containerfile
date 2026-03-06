@@ -1,4 +1,4 @@
-FROM sabotagecla6/vscode
+FROM sabotagecla6/ubuntu-usr
 
 # ***********************************************
 # install packages

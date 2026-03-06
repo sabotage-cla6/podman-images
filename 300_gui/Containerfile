@@ -4,11 +4,10 @@ FROM sabotagecla6/ubuntu-usr
 # install wine
 # ***********************************************
 RUN apt-get update && \
-   DEBIAN_FRONTEND=noninteractive apt-get install -y \
-        zenity x11-apps \
-        pulseaudio
+   DEBIAN_FRONTEND=noninteractive apt-get install --install-recommends -y \
+        zenity x11-apps pulseaudio && \
+        apt-get clean
 
 COPY entrypoint.sh /usr/bin/entrypoint.sh
 RUN chmod a+x /usr/bin/entrypoint.sh
 
-# ENTRYPOINT ["/usr/bin/entrypoint.sh"]
