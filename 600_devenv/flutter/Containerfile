@@ -1,5 +1,7 @@
 FROM sabotagecla6/vscode
 
+WORKDIR /install
+
 RUN apt-get update -y && sudo apt-get upgrade -y;
 
 # install flutter
@@ -8,11 +10,13 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
       clang cmake git \
       ninja-build pkg-config \
       libgtk-3-dev liblzma-dev \
-      libstdc++-12-dev;
+      libstdc++-12-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /usr/local/flutter/;
-ADD https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.41.2-stable.tar.xz /tmp/flutter_linux-stable.tar.xz
-RUN tar -xf /tmp/flutter_linux-stable.tar.xz -C /usr/local/;
+RUN mkdir /usr/local/flutter/
+ADD https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.41.9-stable.tar.xz flutter_linux-stable.tar.xz
+RUN tar -xf flutter_linux-stable.tar.xz -C /usr/local/
 RUN echo 'export PATH="/usr/local/flutter/bin:$PATH"' >> ~/.bash_profile    
 
 # install android studio

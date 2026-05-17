@@ -14,12 +14,11 @@ if [ ${USER_ID} -ne 0 ]; then
     useradd -d /home/$USER -m -s /bin/bash -u $USER_ID -g $GROUP_ID -G sudo $USER
     echo root:${ROOT_PASSWD} | chpasswd
     if ${NO_PASSWD}; then
-        passwd -d ${USER}
-        echo "${USER}    ALL=(ALL:ALL) ALL" > /etc/sudoers.d/${USER}
-    else
-        echo ${USER}:${PASSWD} | chpasswd
+        echo "${USER} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${USER}
+        chmod 0440 /etc/sudoers.d/${USER}
     fi
+    echo ${USER}:${PASSWD} | chpasswd
 
-    sudo mkdir -p /run/user/${USER_ID}
-    sudo chown $USER_ID:$GROUP_ID /run/user/${USER_ID}
+    mkdir -p /run/user/${USER_ID}
+    chown $USER_ID:$GROUP_ID /run/user/${USER_ID}
 fi
