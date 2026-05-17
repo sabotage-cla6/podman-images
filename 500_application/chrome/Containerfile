@@ -5,14 +5,11 @@ WORKDIR /install
 # ***********************************************
 # install packages
 # ***********************************************
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install --install-recommends -y \
-        libnspr4 libnss3 libu2f-udev libvulkan1 xdg-utils fonts-liberation wget ubuntu-restricted-extras
-
 ADD https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb google-chrome-stable.deb
 
-RUN pwd && apt-get update && \
-   DEBIAN_FRONTEND=noninteractive apt-get install --install-recommends -y /install/google-chrome-stable.deb && \
-   apt-get clean
-
-RUN rm -rf /install
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install --install-recommends -y \
+        libnspr4 libnss3 libvulkan1 xdg-utils fonts-liberation wget ubuntu-restricted-extras \
+        /install/google-chrome-stable.deb \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*

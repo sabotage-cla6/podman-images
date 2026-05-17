@@ -3,18 +3,12 @@ FROM sabotagecla6/chrome
 WORKDIR /install
 
 # ***********************************************
-# install packages
-# ***********************************************
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
-        gnupg xdg-utils libnspr4 libnss3
-
-# ***********************************************
 # install vscode
 # ***********************************************
-ADD https://vscode.download.prss.microsoft.com/dbazure/download/stable/072586267e68ece9a47aa43f8c108e0dcbf44622/code_1.109.5-1771531656_amd64.deb code_amd64.deb
+ADD https://vscode.download.prss.microsoft.com/dbazure/download/stable/8b640eef5a6c6089c029249d48efa5c99adf7d51/code_1.119.0-1778006717_amd64.deb code_amd64.deb
 RUN apt-get update && \
-   DEBIAN_FRONTEND=noninteractive apt-get install --install-recommends -y /install/code_amd64.deb && \
-   apt-get clean
-
-RUN rm -rf /install
+    DEBIAN_FRONTEND=noninteractive apt-get install --install-recommends -y \
+        gnupg xdg-utils libnspr4 libnss3 \
+        /install/code_amd64.deb \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
