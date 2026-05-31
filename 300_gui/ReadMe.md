@@ -59,14 +59,14 @@ podman run -u $(id -u):$(id -g) \
     -v ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:Z \
     -e DISPLAY --net=host \
     -v $HOME/.Xauthority:/tmp/.Xauthority:Z -v /tmp/.X11-unix/X0:/tmp/.X11-unix/X0:ro \
+    --shm-size 4g \
     [コンテナイメージ名] [実行コマンド]```
 ```
 
 下記をaliasしておくと便利です
 
 ```
-alias podman-sound='podman run -u 1000:1000 --device /dev/snd -e XDG_RUNTIME_DIR -e PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native -v ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:Z'
-
-alias podman-display='podman-sound -v $HOME/.Xauthority:/tmp/.Xauthority:Z -v /tmp/.X11-unix/X0:/tmp/.X11-unix/X0:ro -e DISPLAY --net=host'
+alias podman-sound='podman run -u 1000:1000 --device /dev/snd -e XDG_RUNTIME_DIR -e PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native -v ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native:ro --security-opt label=disable'
+alias podman-display='podman-sound -v $HOME/.Xauthority:/tmp/.Xauthority:Z -v /tmp/.X11-unix/X0:/tmp/.X11-unix/X0:ro -e DISPLAY --shm-size 4g'
 ```
 
