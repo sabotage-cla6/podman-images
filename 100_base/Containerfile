@@ -18,17 +18,6 @@ RUN mv /etc/apt/sources.list /etc/apt/sources.list.d/sources.list
 RUN cp -p /etc/apt/apt.conf.d/docker-clean /etc/apt/apt.conf.d/docker-clean.bk
 RUN sed -e "s/^/#/g" /etc/apt/apt.conf.d/docker-clean.bk > /etc/apt/apt.conf.d/docker-clean 
 
-# PodmanのRUNでヒアドキュメントが使えないので、それぞれの行に記載
-#RUN <<_EOC_
-#cat <<_DOC_ >> /root/.bashrc
-#if ! shopt -oq posix; then
-#  if [ -f /etc/bash_completion ]; then
-#    . /etc/bash_completion
-#  fi
-#fi
-#_DOC_
-#_EOC_
-
 RUN echo "if [ -f /etc/bash_completion ] && ! shopt -oq posix; then" >> /root/.bashrc
 RUN echo "    . /etc/bash_completion" >> /root/.bashrc
 RUN echo "fi" >> /root/.bashrc
