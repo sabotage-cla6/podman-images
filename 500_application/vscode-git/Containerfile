@@ -1,0 +1,12 @@
+FROM sabotagecla6/vscode
+
+WORKDIR /install
+
+RUN apt-get update -y && sudo apt-get upgrade -y;
+
+# install flutter
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y git \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN echo "sudo -u \${USER} code --install-extension mhutchie.git-graph" >> setup-extensions.sh
