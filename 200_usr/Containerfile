@@ -1,5 +1,7 @@
 FROM sabotagecla6/ubuntu
 
+WORKDIR /install
+
 # ***********************************************
 # setting skelton
 # ***********************************************
@@ -26,12 +28,4 @@ ENV DEFAULT_USER=ubuntu
 ENV DEFAULT_PASSWD=ubuntu
 ENV DEFAULT_ROOT_PASSWD=ubuntu
 
-# when you create container based on ubuntu-usr, you spcify below parameters
-# ENV USER_ID=1000
-# ENV GROUP_ID=1000
-# ENV PASSWD=1000
-# ENV USER=1000
-# ENV ROOT_PASSWD=1000
-# ENV NO_PASSWD=true
-
-COPY create-user.sh /usr/local/bin/
+COPY create-user.sh /install/create-user.sh
