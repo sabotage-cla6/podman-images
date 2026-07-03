@@ -1,0 +1,6 @@
+FROM sabotagecla6/vscode_git
+
+WORKDIR /install
+
+RUN echo "sudo -u \${USER} code --install-extension jebbs.plantuml" >> setup-extensions.sh
+RUN echo "sudo -u \${USER} code --install-extension MermaidChart.vscode-mermaid-chart" >> setup-extensions.sh
