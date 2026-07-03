@@ -5,7 +5,7 @@ WORKDIR /install
 # ***********************************************
 # install vscode
 # ***********************************************
-ADD https://vscode.download.prss.microsoft.com/dbazure/download/stable/8b640eef5a6c6089c029249d48efa5c99adf7d51/code_1.119.0-1778006717_amd64.deb code_amd64.deb
+ADD https://vscode.download.prss.microsoft.com/dbazure/download/stable/4fe60c8b1cdac1c4c174f2fb180d0d758272d713/code_1.127.0-1782814776_amd64.deb code_amd64.deb
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install --install-recommends -y \
         gnupg xdg-utils libnspr4 libnss3 \
