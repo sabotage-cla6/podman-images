@@ -1,9 +1,0 @@
-FROM sabotagecla6/ubuntu-usr
-
-# ***********************************************
-# install packages
-# ***********************************************
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install --install-recommends -y \
-        python3 python3-pip python3-venv && \
-        apt-get clean
