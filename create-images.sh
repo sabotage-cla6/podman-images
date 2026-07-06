@@ -9,6 +9,8 @@ podman build --no-cache ./300_gui/  -t sabotagecla6/ubuntu-gui-jp -f ./300_gui/C
 # application
 podman build --no-cache ./500_application/chrome  -t sabotagecla6/chrome
 podman build --no-cache ./500_application/vscode  -t sabotagecla6/vscode
+podman build --no-cache ./500_application/vscode-git  -t sabotagecla6/vscode-git
+podman build --no-cache ./500_application/vscode-markdown  -t sabotagecla6/vscode-md
 
 podman build --no-cache ./600_devenv/python -t sabotagecla6/python-dev
 podman build --no-cache ./600_devenv/flutter -t sabotagecla6/flutter-dev
@@ -27,6 +29,8 @@ podman tag "${image}:latest" "${image}:${date}"
 image="sabotagecla6/chrome"
 podman tag "${image}:latest" "${image}:${date}"
 image="sabotagecla6/vscode"
+podman tag "${image}:latest" "${image}:${date}"
+image="sabotagecla6/vscode-md"
 podman tag "${image}:latest" "${image}:${date}"
 
 image="sabotagecla6/python-dev"
