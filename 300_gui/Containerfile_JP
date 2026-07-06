@@ -6,7 +6,7 @@ FROM sabotagecla6/ubuntu-gui
 # fcitxをうまく機能させることができなかったので、ibusを使っている。ホスト側はfcitxなので環境変数はfcitx
 RUN apt-get update && \
    DEBIAN_FRONTEND=noninteractive apt-get install --install-recommends -y \
-        language-pack-ja-base language-pack-ja fonts-noto-cjk ibus-mozc \
+        language-pack-ja-base language-pack-ja fonts-noto-cjk fcitx-frontend-all \
         && apt-get clean \
         && rm -rf /var/lib/apt/lists/*
 
