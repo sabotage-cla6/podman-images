@@ -1,4 +1,4 @@
-FROM sabotagecla6/vscode_git
+FROM sabotagecla6/vscode-git
 
 WORKDIR /install
 
