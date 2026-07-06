@@ -1,4 +1,4 @@
-FROM sabotagecla6/vscode
+FROM sabotagecla6/vscode_git
 
 WORKDIR /install
 
@@ -8,24 +8,16 @@ RUN apt-get update -y && sudo apt-get upgrade -y;
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y curl git unzip xz-utils zip libglu1-mesa;
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
       clang cmake git \
-      ninja-build pkg-config \
-      libgtk-3-dev liblzma-dev \
-      libstdc++-12-dev \
+      # ninja-build pkg-config \
+      # libgtk-3-dev liblzma-dev \
+      # libstdc++-12-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /opt/flutter/
-ADD https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.44.0-stable.tar.xz flutter_linux-stable.tar.xz
+ADD https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.44.4-stable.tar.xz flutter_linux-stable.tar.xz
 RUN tar -xf flutter_linux-stable.tar.xz -C /opt/
 RUN echo 'export PATH="/opt/flutter/bin:$PATH"' >> /etc/.bash_profile    
 
-# RUN /usr/local/bin/create-user.sh
-COPY setup-extensions.sh /install/setup-extensions.sh
+RUN echo "sudo -u ${USER} code --install-extension Dart-Code.flutter" >> setup-extensions.sh
 
-# RUN /install/setup-extensions.sh
-
-
-# install android studio
-# RUN DEBIAN_FRONTEND=noninteractive apt-get install -y ncurses bzip2;
-# ENTRYPOINT ["/usr/bin/entrypoint.sh"]
-# CMD ["vscode", "-w"]
