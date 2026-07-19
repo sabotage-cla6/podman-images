@@ -17,7 +17,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
 RUN mkdir /opt/flutter/
 ADD https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.44.4-stable.tar.xz flutter_linux-stable.tar.xz
 RUN tar -xf flutter_linux-stable.tar.xz -C /opt/
-RUN echo 'export PATH="/opt/flutter/bin:$PATH"' >> /etc/.bash_profile    
+RUN echo 'export PATH="/opt/flutter/bin:$PATH"' >> /etc/skel/.bash_profile    
 
-RUN echo "sudo -u ${USER} code --install-extension Dart-Code.flutter" >> setup-extensions.sh
-
+RUN echo "sudo -u \${USER} code --install-extension Dart-Code.flutter" >> setup-extensions.sh

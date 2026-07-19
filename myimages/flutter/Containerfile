@@ -2,9 +2,6 @@ FROM sabotagecla6/flutter-dev
 
 WORKDIR /install
 
-# ***********************************************
-# setting for create user
-# ***********************************************
 ARG USER_ID
 ARG GROUP_ID
 ARG USER
@@ -30,11 +27,14 @@ ENV GTK_IM_MODULE=${INPUT_METHOD} \
 # ***********************************************
 # create user, install extensions
 # ***********************************************
-RUN /usr/local/bin/create-user.sh
+RUN /install/create-user.sh
+RUN chmod u+x /install/setup-extensions.sh
 RUN /install/setup-extensions.sh
 
 RUN sudo -u ${USER} git config --global user.name "${GIT_USER}" \
     && sudo -u ${USER} git config --global user.email "${GIT_EMAIL}"
+
+WORKDIR /home/${USER}
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["code","-w"]
