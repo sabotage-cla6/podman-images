@@ -103,6 +103,6 @@ podman run -u $(id -u):$(id -g) \
 ■ ~/.bash_aliases
 ```
 alias podman-sound='podman run -u $(id -u):$(id -g) --device /dev/snd --userns=keep-id -v ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse:Z'
-alias podman-gui='podman-sound --device /dev/dri --security-opt label=disable -v /tmp/.X11-unix/X0:/tmp/.X11-unix/X0:ro -v ${XDG_RUNTIME_DIR}/bus:${XDG_RUNTIME_DIR}/bus -v $HOME/.Xauthority:/tmp/.Xauthority:Z -e DISPLAY'
+alias podman-gui='podman-sound --shm-size 4g --device /dev/dri --security-opt label=disable -v /tmp/.X11-unix/X0:/tmp/.X11-unix/X0:ro -v ${XDG_RUNTIME_DIR}/bus:${XDG_RUNTIME_DIR}/bus -v $HOME/.Xauthority:/tmp/.Xauthority:Z -e DISPLAY'
 ```
 
