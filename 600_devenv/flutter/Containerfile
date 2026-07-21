@@ -4,18 +4,19 @@ WORKDIR /install
 
 RUN apt-get update -y && sudo apt-get upgrade -y;
 
+RUN mkdir /opt/flutter/
+ADD https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.44.4-stable.tar.xz flutter_linux-stable.tar.xz
+
 # install flutter
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y curl git unzip xz-utils zip libglu1-mesa;
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
-      clang cmake git \
+      unzip xz-utils zip libglu1-mesa \
+      clang cmake \
       # ninja-build pkg-config \
       # libgtk-3-dev liblzma-dev \
       # libstdc++-12-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /opt/flutter/
-ADD https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.44.4-stable.tar.xz flutter_linux-stable.tar.xz
 RUN tar -xf flutter_linux-stable.tar.xz -C /opt/
 RUN echo 'export PATH="/opt/flutter/bin:$PATH"' >> /etc/skel/.bash_profile    
 
